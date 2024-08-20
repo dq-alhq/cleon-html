@@ -1,5 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
-import plugin from "tailwindcss/plugin";
+import plugin from 'tailwindcss/plugin'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,15 +9,15 @@ module.exports = {
             center: true,
             padding: {
                 DEFAULT: '1rem',
-                sm: '2rem',
+                sm: '2rem'
             },
             screens: {
-                '2xl': '1400px',
-            },
+                '2xl': '1400px'
+            }
         },
         extend: {
             fontFamily: {
-                sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans],
+                sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans]
             },
             colors: {
                 border: 'hsl(var(--border))',
@@ -27,643 +27,575 @@ module.exports = {
                 foreground: 'hsl(var(--foreground))',
                 primary: {
                     DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
+                    foreground: 'hsl(var(--primary-foreground))'
                 },
                 secondary: {
                     DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))',
+                    foreground: 'hsl(var(--secondary-foreground))'
                 },
                 danger: {
                     DEFAULT: 'hsl(var(--danger))',
-                    foreground: 'hsl(var(--danger-foreground))',
+                    foreground: 'hsl(var(--danger-foreground))'
                 },
                 success: {
                     DEFAULT: 'hsl(var(--success))',
-                    foreground: 'hsl(var(--success-foreground))',
+                    foreground: 'hsl(var(--success-foreground))'
                 },
                 info: {
                     DEFAULT: 'hsl(var(--info))',
-                    foreground: 'hsl(var(--info-foreground))',
+                    foreground: 'hsl(var(--info-foreground))'
                 },
                 warning: {
                     DEFAULT: 'hsl(var(--warning))',
-                    foreground: 'hsl(var(--warning-foreground))',
+                    foreground: 'hsl(var(--warning-foreground))'
                 },
                 dark: {
                     DEFAULT: 'hsl(var(--dark))',
-                    foreground: 'hsl(var(--dark-foreground))',
+                    foreground: 'hsl(var(--dark-foreground))'
                 },
                 muted: {
                     DEFAULT: 'hsl(var(--muted))',
-                    foreground: 'hsl(var(--muted-foreground))',
+                    foreground: 'hsl(var(--muted-foreground))'
                 },
                 accent: {
                     DEFAULT: 'hsl(var(--accent))',
-                    foreground: 'hsl(var(--accent-foreground))',
+                    foreground: 'hsl(var(--accent-foreground))'
                 },
                 popover: {
                     DEFAULT: 'hsl(var(--popover))',
-                    foreground: 'hsl(var(--popover-foreground))',
+                    foreground: 'hsl(var(--popover-foreground))'
                 },
                 card: {
                     DEFAULT: 'hsl(var(--card))',
-                    foreground: 'hsl(var(--card-foreground))',
-                },
+                    foreground: 'hsl(var(--card-foreground))'
+                }
             },
             borderRadius: {
                 lg: `var(--radius)`,
                 md: `calc(var(--radius) - 2px)`,
-                sm: 'calc(var(--radius) - 4px)',
-            },
-        },
+                sm: 'calc(var(--radius) - 4px)'
+            }
+        }
     },
     plugins: [
         plugin(function ({ addVariant, e }) {
-            addVariant('hs-dropdown-open', [
+            addVariant('dropdown-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-dropdown.open > .${e(
-                            `hs-dropdown-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.dropdown.open > .${e(`dropdown-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-dropdown.open > .hs-dropdown-toggle .${e(
-                            `hs-dropdown-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.dropdown.open > .dropdown-toggle .${e(`dropdown-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-dropdown.open > .hs-dropdown-menu > .${e(
-                            `hs-dropdown-open${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.dropdown.open > .dropdown-menu > .${e(`dropdown-open${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-removing', ({ modifySelectors, separator }) => {
+            addVariant('removing', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.hs-removing.${e(`hs-removing${separator}${className}`)}`;
-                });
-            });
+                    return `.removing.${e(`removing${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-tooltip-shown', ({ modifySelectors, separator }) => {
+            addVariant('tooltip-shown', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.hs-tooltip.show .${e(
-                        `hs-tooltip-shown${separator}${className}`,
-                    )}`;
-                });
-            });
+                    return `.tooltip.show .${e(`tooltip-shown${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-accordion-active', [
+            addVariant('accordion-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active.${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accordion.active.${e(`accordion-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active > .${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accordion.active > .${e(`accordion-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active > .hs-accordion-toggle .${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accordion.active > .accordion-toggle .${e(`accordion-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active > .hs-accordion-heading > .hs-accordion-toggle .${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accordion.active > .accordion-heading > .accordion-toggle .${e(
+                            `accordion-active${separator}${className}`
+                        )}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active > .hs-accordion-toggle.${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accordion.active > .accordion-toggle.${e(`accordion-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-accordion.active > .hs-accordion-heading > .hs-accordion-toggle.${e(
-                            `hs-accordion-active${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.accordion.active > .accordion-heading > .accordion-toggle.${e(
+                            `accordion-active${separator}${className}`
+                        )}`
+                    })
+                }
+            ])
 
-            addVariant('hs-accordion-selected', ({ modifySelectors, separator }) => {
+            addVariant('accordion-selected', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.hs-accordion .selected.${e(
-                        `hs-accordion-selected${separator}${className}`,
-                    )}`;
-                });
-            });
+                    return `.accordion .selected.${e(`accordion-selected${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-collapse-open', [
+            addVariant('collapse-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-collapse.open .${e(
-                            `hs-collapse-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.collapse.open .${e(`collapse-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-collapse.open.${e(
-                            `hs-collapse-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.collapse.open.${e(`collapse-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-collapse-toggle.open .${e(
-                            `hs-collapse-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.collapse-toggle.open .${e(`collapse-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-collapse-toggle.open.${e(
-                            `hs-collapse-open${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.collapse-toggle.open.${e(`collapse-open${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-tab-active', [
+            addVariant('tab-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `[data-hs-tab].active.${e(
-                            `hs-tab-active${separator}${className}`,
-                        )}`;
-                    });
+                        return `[data-tab].active.${e(`tab-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `[data-hs-tab].active .${e(
-                            `hs-tab-active${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `[data-tab].active .${e(`tab-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-overlay-open', [
+            addVariant('overlay-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.open.${e(`hs-overlay-open${separator}${className}`)}`;
-                    });
+                        return `.open.${e(`overlay-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.open .${e(`hs-overlay-open${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.open .${e(`overlay-open${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-overlay-layout-open', [
+            addVariant('overlay-layout-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-overlay-body-open.${e(
-                            `hs-overlay-layout-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.overlay-body-open.${e(`overlay-layout-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-overlay-body-open .${e(
-                            `hs-overlay-layout-open${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.overlay-body-open .${e(`overlay-layout-open${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-overlay-backdrop-open', [
+            addVariant('overlay-backdrop-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-overlay-backdrop.${e(
-                            `hs-overlay-backdrop-open${separator}${className}`,
-                        )}`;
-                    });
+                        return `.overlay-backdrop.${e(`overlay-backdrop-open${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.hs-overlay-backdrop .${e(
-                            `hs-overlay-backdrop-open${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.overlay-backdrop .${e(`overlay-backdrop-open${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-scrollspy-active', ({ modifySelectors, separator }) => {
+            addVariant('scrollspy-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.active.${e(`hs-scrollspy-active${separator}${className}`)}`;
-                });
-            });
+                    return `.active.${e(`scrollspy-active${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-carousel-active', [
+            addVariant('carousel-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-carousel-active${separator}${className}`)}`;
-                    });
+                        return `.active.${e(`carousel-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-carousel-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active .${e(`carousel-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-carousel-disabled', [
+            addVariant('carousel-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled.${e(
-                            `hs-carousel${separator}disabled${separator}${className}`,
-                        )}`;
-                    });
+                        return `.disabled.${e(`carousel${separator}disabled${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled .${e(
-                            `hs-carousel${separator}disabled${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.disabled .${e(`carousel${separator}disabled${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-selected', [
+            addVariant('selected', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.selected.${e(`hs-selected${separator}${className}`)}`;
-                    });
+                        return `.selected.${e(`selected${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.selected .${e(`hs-selected${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.selected .${e(`selected${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-select-disabled', [
+            addVariant('select-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled.${e(`hs-select-disabled${separator}${className}`)}`;
-                    });
+                        return `.disabled.${e(`select-disabled${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled .${e(`hs-select-disabled${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.disabled .${e(`select-disabled${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-select-active', [
+            addVariant('select-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-select-active${separator}${className}`)}`;
-                    });
+                        return `.active.${e(`select-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-select-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active .${e(`select-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-input-number-disabled', [
+            addVariant('input-number-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled.${e(
-                            `hs-input-number-disabled${separator}${className}`,
-                        )}`;
-                    });
+                        return `.disabled.${e(`input-number-disabled${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled .${e(
-                            `hs-input-number-disabled${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.disabled .${e(`input-number-disabled${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-pin-input-active', [
+            addVariant('pin-input-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-pin-input-active${separator}${className}`)}`;
-                    });
+                        return `.active.${e(`pin-input-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-pin-input-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active .${e(`pin-input-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-select-opened', [
+            addVariant('select-opened', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.opened.${e(`hs-select-opened${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.opened.${e(`select-opened${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-password-active', [
+            addVariant('password-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-password-active${separator}${className}`)}`;
-                    });
+                        return `.active.${e(`password-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-password-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active .${e(`password-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-active', [
+            addVariant('stepper-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-stepper-active${separator}${className}`)}`;
-                    });
+                        return `.active.${e(`stepper-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-stepper-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active .${e(`stepper-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-success', [
+            addVariant('stepper-success', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.success.${e(`hs-stepper-success${separator}${className}`)}`;
-                    });
+                        return `.success.${e(`stepper-success${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.success .${e(`hs-stepper-success${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.success .${e(`stepper-success${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-completed', [
+            addVariant('stepper-completed', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.completed.${e(
-                            `hs-stepper-completed${separator}${className}`,
-                        )}`;
-                    });
+                        return `.completed.${e(`stepper-completed${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.completed .${e(
-                            `hs-stepper-completed${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.completed .${e(`stepper-completed${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-error', [
+            addVariant('stepper-error', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.error.${e(`hs-stepper-error${separator}${className}`)}`;
-                    });
+                        return `.error.${e(`stepper-error${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.error .${e(`hs-stepper-error${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.error .${e(`stepper-error${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-processed', [
+            addVariant('stepper-processed', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.processed.${e(
-                            `hs-stepper-processed${separator}${className}`,
-                        )}`;
-                    });
+                        return `.processed.${e(`stepper-processed${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.processed .${e(
-                            `hs-stepper-processed${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.processed .${e(`stepper-processed${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-disabled', [
+            addVariant('stepper-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled.${e(`hs-stepper-disabled${separator}${className}`)}`;
-                    });
+                        return `.disabled.${e(`stepper-disabled${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.disabled .${e(`hs-stepper-disabled${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.disabled .${e(`stepper-disabled${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-stepper-skipped', [
+            addVariant('stepper-skipped', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.skipped.${e(`hs-stepper-skipped${separator}${className}`)}`;
-                    });
+                        return `.skipped.${e(`stepper-skipped${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.skipped .${e(`hs-stepper-skipped${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.skipped .${e(`stepper-skipped${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-strong-password', [
+            addVariant('strong-password', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.passed.${e(`hs-strong-password${separator}${className}`)}`;
-                    });
+                        return `.passed.${e(`strong-password${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.passed .${e(`hs-strong-password${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.passed .${e(`strong-password${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-strong-password-accepted', [
+            addVariant('strong-password-accepted', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.accepted.${e(
-                            `hs-strong-password-accepted${separator}${className}`,
-                        )}`;
-                    });
+                        return `.accepted.${e(`strong-password-accepted${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.accepted .${e(
-                            `hs-strong-password-accepted${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.accepted .${e(`strong-password-accepted${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-strong-password-active', [
+            addVariant('strong-password-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(
-                            `hs-strong-password-active${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.active.${e(`strong-password-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-combo-box-active', [
+            addVariant('combo-box-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active .${e(`hs-combo-box-active${separator}${className}`)}`;
-                    });
+                        return `.active .${e(`combo-box-active${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(`hs-combo-box-active${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.active.${e(`combo-box-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-combo-box-has-value', [
+            addVariant('combo-box-has-value', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.has-value .${e(`hs-combo-box-has-value${separator}${className}`)}`;
-                    });
+                        return `.has-value .${e(`combo-box-has-value${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.has-value.${e(`hs-combo-box-has-value${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.has-value.${e(`combo-box-has-value${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-combo-box-selected', [
+            addVariant('combo-box-selected', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.selected .${e(
-                            `hs-combo-box-selected${separator}${className}`,
-                        )}`;
-                    });
+                        return `.selected .${e(`combo-box-selected${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.selected.${e(
-                            `hs-combo-box-selected${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.selected.${e(`combo-box-selected${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-combo-box-tab-active', [
+            addVariant('combo-box-tab-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.active.${e(
-                            `hs-combo-box-tab-active${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.active.${e(`combo-box-tab-active${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-apexcharts-tooltip-dark', [
+            addVariant('apexcharts-tooltip-dark', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.dark.${e(
-                            `hs-apexcharts-tooltip-dark${separator}${className}`,
-                        )}`;
-                    });
-                },
-            ]);
+                        return `.dark.${e(`apexcharts-tooltip-dark${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-success', [
+            addVariant('success', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.success .${e(`hs-success${separator}${className}`)}`;
-                    });
+                        return `.success .${e(`success${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.success.${e(`hs-success${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.success.${e(`success${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-error', [
+            addVariant('error', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.error .${e(`hs-error${separator}${className}`)}`;
-                    });
+                        return `.error .${e(`error${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.error.${e(`hs-error${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.error.${e(`error${separator}${className}`)}`
+                    })
+                }
+            ])
 
             // Datatables.net
-            addVariant('hs-datatable-ordering-asc', [
+            addVariant('datatable-ordering-asc', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.dt-ordering-asc .${e(`hs-datatable-ordering-asc${separator}${className}`)}`;
-                    });
+                        return `.dt-ordering-asc .${e(`datatable-ordering-asc${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.dt-ordering-asc.${e(`hs-datatable-ordering-asc${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.dt-ordering-asc.${e(`datatable-ordering-asc${separator}${className}`)}`
+                    })
+                }
+            ])
 
-            addVariant('hs-datatable-ordering-desc', [
+            addVariant('datatable-ordering-desc', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.dt-ordering-desc .${e(`hs-datatable-ordering-desc${separator}${className}`)}`;
-                    });
+                        return `.dt-ordering-desc .${e(`datatable-ordering-desc${separator}${className}`)}`
+                    })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.dt-ordering-desc.${e(`hs-datatable-ordering-desc${separator}${className}`)}`;
-                    });
-                },
-            ]);
+                        return `.dt-ordering-desc.${e(`datatable-ordering-desc${separator}${className}`)}`
+                    })
+                }
+            ])
 
             // Modes
-            addVariant('hs-default-mode-active', ({ modifySelectors, separator }) => {
+            addVariant('default-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.default .${e(`hs-default-mode-active${separator}${className}`)}`;
-                });
-            });
+                    return `.default .${e(`default-mode-active${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-dark-mode-active', ({ modifySelectors, separator }) => {
+            addVariant('dark-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.dark .${e(`hs-dark-mode-active${separator}${className}`)}`;
-                });
-            });
+                    return `.dark .${e(`dark-mode-active${separator}${className}`)}`
+                })
+            })
 
-            addVariant('hs-auto-mode-active', ({ modifySelectors, separator }) => {
+            addVariant('auto-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
-                    return `.auto .${e(`hs-auto-mode-active${separator}${className}`)}`;
-                });
-            });
+                    return `.auto .${e(`auto-mode-active${separator}${className}`)}`
+                })
+            })
         })
-    ],
+    ]
 }

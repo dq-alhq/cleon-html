@@ -1,4 +1,4 @@
-export const POSITIONS: Record<string, string> = {
+export const POSITIONS: any = {
     auto: 'auto',
     'auto-start': 'auto-start',
     'auto-end': 'auto-end',

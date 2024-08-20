@@ -19,15 +19,25 @@ const getClassPropertyAlt = (el: HTMLElement, prop?: string, val: string = '') =
 }
 
 const isIOS = () => {
-    if (/iPad|iPhone|iPod/.test(navigator.platform)) {
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
         return true
     } else {
-        return navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform)
+        return (
+            navigator.maxTouchPoints &&
+            navigator.maxTouchPoints > 2 &&
+            /Mac OS X/.test(navigator.userAgent) &&
+            !/Safari/.test(navigator.userAgent)
+        )
     }
 }
 
 const isIpadOS = () => {
-    return navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /MacIntel/.test(navigator.platform)
+    return (
+        navigator.maxTouchPoints &&
+        navigator.maxTouchPoints > 2 &&
+        /Mac OS X/.test(navigator.userAgent) &&
+        !/Safari/.test(navigator.userAgent)
+    )
 }
 
 const isEnoughSpace = (

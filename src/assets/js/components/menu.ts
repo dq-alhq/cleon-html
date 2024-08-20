@@ -1,0 +1,534 @@
+/*
+ * Dropdown
+ */
+
+import { createPopper, PositioningStrategy } from '@popperjs/core'
+import { afterTransition, dispatch, getClassProperty, getClassPropertyAlt, isIOS, isIpadOS } from '../utils'
+import { DROPDOWN_ACCESSIBILITY_KEY_SET, POSITIONS } from '../utils/constants'
+import BaseComponent from './base'
+
+interface IMenuSearchHistory {
+    historyIndex: number
+    addHistory(index: number): void
+    existsInHistory(index: number): boolean
+    clearHistory(): void
+}
+interface IMenu {
+    options?: {}
+    open(): void
+    close(isAnimated: boolean): void
+    forceClearState(): void
+}
+interface IHTMLElementPopper extends HTMLElement {
+    _popper: any
+}
+interface ICollectionItem<T> {
+    id: string | number
+    element: T
+}
+const menuSearchHistory = {
+    historyIndex: -1,
+    addHistory(index: number) {
+        this.historyIndex = index
+    },
+    existsInHistory(index: number) {
+        return index > this.historyIndex
+    },
+    clearHistory() {
+        this.historyIndex = -1
+    }
+}
+
+class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
+    private static history: IMenuSearchHistory
+    private readonly toggle: HTMLElement | null
+    private readonly closers: HTMLElement[] | null
+    public menu: HTMLElement | null
+    private eventMode: string
+    private closeMode: string
+    private animationInProcess: boolean
+
+    constructor(el: IHTMLElementPopper, options?: {}, events?: {}) {
+        super(el, options, events)
+
+        this.toggle =
+            this.el.querySelector(':scope > .menu-toggle') ||
+            this.el.querySelector(':scope > .menu-toggle-wrapper > .menu-toggle') ||
+            (this.el.children[0] as HTMLElement)
+        this.closers = Array.from(this.el.querySelectorAll(':scope .menu-close')) || null
+        this.menu = this.el.querySelector(':scope > .menu')
+        this.eventMode = getClassProperty(this.el, '--trigger', 'click')
+        this.closeMode = getClassProperty(this.el, '--auto-close', 'true')
+        this.animationInProcess = false
+
+        if (this.toggle && this.menu) this.init()
+    }
+
+    private init() {
+        this.createCollection(window.$MenuCollection, this)
+
+        if ((this.toggle as HTMLButtonElement).disabled) return false
+
+        if (this.toggle) this.buildToggle()
+        if (this.menu) this.buildMenu()
+        if (this.closers) this.buildClosers()
+
+        if (!isIOS() && !isIpadOS()) {
+            this.el.addEventListener('mouseenter', () => this.onMouseEnterHandler())
+            this.el.addEventListener('mouseleave', () => this.onMouseLeaveHandler())
+        }
+    }
+
+    resizeHandler() {
+        this.eventMode = getClassProperty(this.el, '--trigger', 'click')
+        this.closeMode = getClassProperty(this.el, '--auto-close', 'true')
+    }
+
+    private buildToggle() {
+        if (this?.toggle?.ariaExpanded) {
+            if (this.el.classList.contains('open')) this.toggle.ariaExpanded = 'true'
+            else this.toggle.ariaExpanded = 'false'
+        }
+
+        this.toggle.addEventListener('click', (evt) => this.onClickHandler(evt))
+    }
+
+    private buildMenu() {
+        this.menu.role = 'menu'
+    }
+
+    private buildClosers() {
+        this.closers.forEach((el: HTMLButtonElement) => {
+            el.addEventListener('click', () => this.close())
+        })
+    }
+
+    private onClickHandler(evt: Event) {
+        if (this.el.classList.contains('open') && !this.menu.classList.contains('hidden')) {
+            this.close()
+        } else {
+            this.open()
+        }
+    }
+
+    private onMouseEnterHandler() {
+        if (this.eventMode !== 'hover') return false
+
+        if (this.el._popper) this.forceClearState()
+
+        if (!this.el.classList.contains('open') && this.menu.classList.contains('hidden')) {
+            this.open()
+        }
+    }
+
+    private onMouseLeaveHandler() {
+        if (this.eventMode !== 'hover') return false
+
+        if (this.el.classList.contains('open') && !this.menu.classList.contains('hidden')) {
+            this.close()
+        }
+    }
+
+    private destroyPopper() {
+        this.menu.classList.remove('block')
+        this.menu.classList.add('hidden')
+
+        this.menu.style.inset = null
+        this.menu.style.position = null
+
+        if (this.el && this.el._popper) this.el._popper.destroy()
+
+        this.animationInProcess = false
+    }
+
+    private absoluteStrategyModifiers() {
+        return [
+            {
+                name: 'applyStyles',
+                fn: (data: any) => {
+                    const strategy = (
+                        window.getComputedStyle(this.el).getPropertyValue('--strategy') || 'absolute'
+                    ).replace(' ', '')
+                    const adaptive = (
+                        window.getComputedStyle(this.el).getPropertyValue('--adaptive') || 'adaptive'
+                    ).replace(' ', '')
+
+                    data.state.elements.popper.style.position = strategy
+                    data.state.elements.popper.style.transform =
+                        adaptive === 'adaptive' ? data.state.styles.popper.transform : null
+                    data.state.elements.popper.style.top = null
+                    data.state.elements.popper.style.bottom = null
+                    data.state.elements.popper.style.left = null
+                    data.state.elements.popper.style.right = null
+                    data.state.elements.popper.style.margin = 0
+                }
+            }
+        ]
+    }
+
+    // Public methods
+    public open() {
+        if (this.el.classList.contains('open')) return false
+
+        if (this.animationInProcess) return false
+
+        this.animationInProcess = true
+
+        const placement = (window.getComputedStyle(this.el).getPropertyValue('--placement') || '').replace(' ', '')
+        const flip = (window.getComputedStyle(this.el).getPropertyValue('--flip') || 'true').replace(' ', '')
+        const strategy = (window.getComputedStyle(this.el).getPropertyValue('--strategy') || 'fixed').replace(
+            ' ',
+            ''
+        ) as PositioningStrategy
+        const offset = parseInt(
+            (window.getComputedStyle(this.el).getPropertyValue('--offset') || '10').replace(' ', '')
+        )
+        const gpuAcceleration = (
+            window.getComputedStyle(this.el).getPropertyValue('--gpu-acceleration') || 'true'
+        ).replace(' ', '')
+
+        if (strategy !== ('static' as PositioningStrategy)) {
+            this.el._popper = createPopper(this.el, this.menu, {
+                placement: POSITIONS[placement] || 'bottom-start',
+                strategy: strategy,
+                modifiers: [
+                    ...(strategy !== 'fixed' ? this.absoluteStrategyModifiers() : []),
+                    {
+                        name: 'flip',
+                        enabled: flip === 'true'
+                    },
+                    {
+                        name: 'offset',
+                        options: {
+                            offset: [0, offset]
+                        }
+                    },
+                    {
+                        name: 'computeStyles',
+                        options: {
+                            adaptive: strategy === 'fixed',
+                            gpuAcceleration: gpuAcceleration === 'true'
+                        }
+                    }
+                ]
+            })
+        }
+
+        this.menu.style.margin = null
+
+        this.menu.classList.remove('hidden')
+        this.menu.classList.add('block')
+
+        setTimeout(() => {
+            if (this?.toggle?.ariaExpanded) this.toggle.ariaExpanded = 'true'
+            this.el.classList.add('open')
+
+            this.animationInProcess = false
+        })
+
+        this.fireEvent('open', this.el)
+        dispatch('open.menu', this.el, this.el)
+    }
+
+    public close(isAnimated = true) {
+        if (this.animationInProcess || !this.el.classList.contains('open')) return false
+
+        const clearAfterClose = () => {
+            this.menu.style.margin = null
+
+            if (this?.toggle?.ariaExpanded) this.toggle.ariaExpanded = 'false'
+            this.el.classList.remove('open')
+
+            this.fireEvent('close', this.el)
+            dispatch('close.menu', this.el, this.el)
+        }
+
+        this.animationInProcess = true
+
+        if (isAnimated) {
+            const el: HTMLElement = this.el.querySelector('[data-menu-transition]') || this.menu
+
+            afterTransition(el, () => this.destroyPopper())
+        } else this.destroyPopper()
+
+        clearAfterClose()
+    }
+
+    public forceClearState() {
+        this.destroyPopper()
+        this.menu.style.margin = null
+        this.el.classList.remove('open')
+    }
+
+    // Static methods
+    static getInstance(target: HTMLElement | string, isInstance?: boolean) {
+        const elInCollection = window.$MenuCollection.find(
+            (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
+        )
+
+        return elInCollection ? (isInstance ? elInCollection : elInCollection.element.el) : null
+    }
+
+    static autoInit() {
+        if (!window.$MenuCollection) window.$MenuCollection = []
+
+        document.querySelectorAll('.menu:not(.--prevent-on-load-init)').forEach((el: IHTMLElementPopper) => {
+            if (!window.$MenuCollection.find((elC) => (elC?.element?.el as HTMLElement) === el)) new Menu(el)
+        })
+
+        if (window.$MenuCollection) {
+            document.addEventListener('keydown', (evt) => Menu.accessibility(evt))
+
+            window.addEventListener('click', (evt) => {
+                const evtTarget = evt.target
+
+                Menu.closeCurrentlyOpened(evtTarget as HTMLElement)
+            })
+
+            let prevWidth = window.innerWidth
+            window.addEventListener('resize', () => {
+                if (window.innerWidth !== prevWidth) {
+                    prevWidth = innerWidth
+                    Menu.closeCurrentlyOpened(null, false)
+                }
+            })
+        }
+    }
+
+    static open(target: HTMLElement) {
+        const elInCollection = window.$MenuCollection.find(
+            (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
+        )
+
+        if (elInCollection && elInCollection.element.menu.classList.contains('hidden')) elInCollection.element.open()
+    }
+
+    static close(target: HTMLElement) {
+        const elInCollection = window.$MenuCollection.find(
+            (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
+        )
+
+        if (elInCollection && !elInCollection.element.menu.classList.contains('hidden')) {
+            elInCollection.element.close()
+        }
+    }
+
+    // Accessibility methods
+    static accessibility(evt: KeyboardEvent) {
+        this.history = menuSearchHistory
+
+        const target: ICollectionItem<Menu> | null = window.$MenuCollection.find((el) =>
+            el.element.el.classList.contains('open')
+        )
+
+        if (
+            target &&
+            (DROPDOWN_ACCESSIBILITY_KEY_SET.includes(evt.code) ||
+                (evt.code.length === 4 && evt.code[evt.code.length - 1].match(/^[A-Z]*$/))) &&
+            !evt.metaKey &&
+            !target.element.menu.querySelector('input:focus') &&
+            !target.element.menu.querySelector('textarea:focus')
+        ) {
+            switch (evt.code) {
+                case 'Escape':
+                    if (!target.element.menu.querySelector('.select.active')) {
+                        evt.preventDefault()
+                        this.onEscape(evt)
+                    }
+                    break
+                case 'Enter':
+                    if (
+                        !target.element.menu.querySelector('.select button:focus') &&
+                        !target.element.menu.querySelector('.collapsible-toggle:focus')
+                    ) {
+                        this.onEnter(evt)
+                    }
+                    break
+                case 'ArrowUp':
+                    evt.preventDefault()
+                    evt.stopImmediatePropagation()
+                    this.onArrow()
+                    break
+                case 'ArrowDown':
+                    evt.preventDefault()
+                    evt.stopImmediatePropagation()
+                    this.onArrow(false)
+                    break
+                case 'Home':
+                    evt.preventDefault()
+                    evt.stopImmediatePropagation()
+                    this.onStartEnd()
+                    break
+                case 'End':
+                    evt.preventDefault()
+                    evt.stopImmediatePropagation()
+                    this.onStartEnd(false)
+                    break
+                default:
+                    evt.preventDefault()
+                    this.onFirstLetter(evt.key)
+                    break
+            }
+        }
+    }
+
+    static onEscape(evt: KeyboardEvent) {
+        const menu = (evt.target as HTMLElement).closest('.menu.open')
+
+        if (window.$MenuCollection.find((el) => el.element.el === menu)) {
+            const target = window.$MenuCollection.find((el) => el.element.el === menu)
+
+            if (target) {
+                target.element.close()
+                target.element.toggle.focus()
+            }
+        } else {
+            this.closeCurrentlyOpened()
+        }
+    }
+
+    static onEnter(evt: KeyboardEvent) {
+        const menu = (evt.target as HTMLElement).parentElement
+
+        if (window.$MenuCollection.find((el) => el.element.el === menu)) {
+            evt.preventDefault()
+
+            const target = window.$MenuCollection.find((el) => el.element.el === menu)
+
+            if (target) target.element.open()
+        }
+    }
+
+    static onArrow(isArrowUp = true) {
+        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+
+        if (target) {
+            const menu = target.element.menu
+
+            if (!menu) return false
+
+            const preparedLinks = isArrowUp
+                ? Array.from(menu.querySelectorAll('a:not([hidden]), .menu > button:not([hidden])')).reverse()
+                : Array.from(menu.querySelectorAll('a:not([hidden]), .menu > button:not([hidden])'))
+
+            const links = preparedLinks.filter((el: any) => !el.classList.contains('disabled'))
+            const current = menu.querySelector('a:focus, button:focus')
+            let currentInd = links.findIndex((el: any) => el === current)
+
+            if (currentInd + 1 < links.length) {
+                currentInd++
+            }
+
+            ;(links[currentInd] as HTMLButtonElement | HTMLAnchorElement).focus()
+        }
+    }
+
+    static onStartEnd(isStart = true) {
+        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+
+        if (target) {
+            const menu = target.element.menu
+
+            if (!menu) return false
+
+            const preparedLinks = isStart
+                ? Array.from(menu.querySelectorAll('a'))
+                : Array.from(menu.querySelectorAll('a')).reverse()
+            const links = preparedLinks.filter((el: any) => !el.classList.contains('disabled'))
+
+            if (links.length) {
+                links[0].focus()
+            }
+        }
+    }
+
+    static onFirstLetter(code: string) {
+        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+
+        if (target) {
+            const menu = target.element.menu
+
+            if (!menu) return false
+
+            const links = Array.from(menu.querySelectorAll('a'))
+            const getCurrentInd = () =>
+                links.findIndex(
+                    (el, i) =>
+                        el.innerText.toLowerCase().charAt(0) === code.toLowerCase() && this.history.existsInHistory(i)
+                )
+            let currentInd = getCurrentInd()
+
+            if (currentInd === -1) {
+                this.history.clearHistory()
+                currentInd = getCurrentInd()
+            }
+
+            if (currentInd !== -1) {
+                links[currentInd].focus()
+                this.history.addHistory(currentInd)
+            }
+        }
+    }
+
+    static closeCurrentlyOpened(evtTarget: HTMLElement | null = null, isAnimated = true) {
+        const parent =
+            evtTarget && evtTarget.closest('.menu') && evtTarget.closest('.menu').parentElement.closest('.menu')
+                ? evtTarget.closest('.menu').parentElement.closest('.menu')
+                : null
+        let currentlyOpened = parent
+            ? window.$MenuCollection.filter(
+                  (el) =>
+                      el.element.el.classList.contains('open') &&
+                      el.element.menu.closest('.menu').parentElement.closest('.menu') === parent
+              )
+            : window.$MenuCollection.filter((el) => el.element.el.classList.contains('open'))
+
+        if (
+            evtTarget &&
+            evtTarget.closest('.menu') &&
+            getClassPropertyAlt(evtTarget.closest('.menu'), '--auto-close') === 'inside'
+        ) {
+            currentlyOpened = currentlyOpened.filter((el) => el.element.el !== evtTarget.closest('.menu'))
+        }
+
+        if (currentlyOpened) {
+            currentlyOpened.forEach((el) => {
+                if (el.element.closeMode === 'false' || el.element.closeMode === 'outside') return false
+
+                el.element.close(isAnimated)
+            })
+        }
+    }
+
+    // Backward compatibility
+    static on(evt: string, target: HTMLElement, cb: Function) {
+        const elInCollection = window.$MenuCollection.find(
+            (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
+        )
+
+        if (elInCollection) elInCollection.element.events[evt] = cb
+    }
+}
+
+declare global {
+    interface Window {
+        Menu: Function
+        $MenuCollection: ICollectionItem<Menu>[]
+    }
+}
+
+window.addEventListener('load', () => {
+    Menu.autoInit()
+})
+
+window.addEventListener('resize', () => {
+    if (!window.$MenuCollection) window.$MenuCollection = []
+
+    window.$MenuCollection.forEach((el) => el.element.resizeHandler())
+})
+
+if (typeof window !== 'undefined') {
+    window.Menu = Menu
+}
+
+export default Menu
