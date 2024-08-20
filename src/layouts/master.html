@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title }} - {{ web_title }}</title>
+        {% block stylesfirst %}{% endblock %}
+        <link rel="stylesheet" href="assets/scss/app.scss" />
+        <link
+            rel="shortcut icon"
+            href="assets/static/images/logo/favicon.svg"
+            type="image/x-icon"
+        />
+        <link rel="shortcut icon" href="assets/static/images/logo/favicon.png" type="image/png" />
+        {% block styles %}{% endblock %}
+    </head>
+
+    <body class="min-h-screen font-sans antialiased">
+        {% include "../partials/responsive-sidebar.html" %}
+        <div class="grid min-h-screen w-full md:grid-cols-[280px_1fr]">
+            <!-- Sidebar-->
+            <div class="sticky top-0 hidden max-h-screen overflow-auto border-r md:block">
+                {% include "../partials/sidebar.html" %}
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="flex flex-col w-full overflow-auto">
+                {% include "../partials/navbar.html" %}
+                <main class="container py-4">{% block content %}{% endblock %}</main>
+                <!-- Footer -->
+                {% include '../partials/footer.html' %}
+                <!-- End Footer -->
+            </div>
+        </div>
+
+        <!-- Main Scripts -->
+        {% if isDev %}
+        <script src="assets/js/app.ts" type="module"></script>
+        {% else %}
+        <script src="assets/compiled/js/app.js"></script>
+        {% endif %}
+        <!-- End Main Scripts -->
+        <!-- Plugins JS -->
+        {% block js %}{% endblock %}
+        <!-- End Plugins JS -->
+    </body>
+</html>
