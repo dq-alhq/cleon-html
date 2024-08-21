@@ -1,11 +1,11 @@
 import fs from 'fs'
-import { defineConfig, normalizePath, build } from 'vite'
 import path, { resolve } from 'path'
 import { fileURLToPath } from 'url'
+import { build, defineConfig, normalizePath } from 'vite'
 import nunjucks from 'vite-plugin-nunjucks'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
-import sidebarItems from './src/sidebar-items.json'
 import horizontalMenuItems from './src/horizontal-menu-items.json'
+import sidebarItems from './src/sidebar-items.json'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -33,7 +33,7 @@ const getVariables = (mode) => {
             web_title: 'Cleon UI',
             sidebarItems,
             horizontalMenuItems,
-            isDev: mode === 'development',
+            isDev: mode === 'development'
         }
     })
     return variables
@@ -63,7 +63,7 @@ const modulesToCopy = {
     // parsleyjs: true,
     // sweetalert2: true,
     // summernote: true,
-    // jquery: true,
+    jquery: true
     // quill: true,
     // tinymce: false,
     // "toastify-js": false,
@@ -76,11 +76,9 @@ const modulesToCopy = {
 const copyModules = Object.keys(modulesToCopy).map((moduleName) => {
     const withDist = modulesToCopy[moduleName]
     return {
-        src: normalizePath(
-            resolve(__dirname, `./node_modules/${moduleName}${withDist ? '/dist' : ''}`)
-        ),
+        src: normalizePath(resolve(__dirname, `./node_modules/${moduleName}${withDist ? '/dist' : ''}`)),
         dest: 'assets/extensions',
-        rename: moduleName,
+        rename: moduleName
     }
 })
 
@@ -93,14 +91,14 @@ build({
             name: 'app',
             formats: ['umd'],
             fileName: 'app',
-            entry: './src/assets/js/app.ts',
+            entry: './src/assets/js/app.ts'
         },
         rollupOptions: {
             output: {
-                entryFileNames: '[name].js',
-            },
-        },
-    },
+                entryFileNames: '[name].js'
+            }
+        }
+    }
 }).then((r) => r)
 
 export default defineConfig((env) => ({
@@ -112,23 +110,22 @@ export default defineConfig((env) => ({
             targets: [
                 {
                     src: normalizePath(resolve(__dirname, './src/assets/static')),
-                    dest: 'assets',
+                    dest: 'assets'
                 },
                 {
                     src: normalizePath(resolve(__dirname, './dist/assets/compiled/fonts')),
-                    dest: 'assets/compiled/css',
+                    dest: 'assets/compiled/css'
                 },
                 {
-                    src: normalizePath(
-                        resolve(__dirname, './node_modules/bootstrap-icons/bootstrap-icons.svg')
-                    ),
-                    dest: 'assets/static/images',
+                    src: normalizePath(resolve(__dirname, './node_modules/bootstrap-icons/bootstrap-icons.svg')),
+                    dest: 'assets/static/images'
                 },
-                ...copyModules,
+                ...copyModules
             ],
             watch: {
-                reloadPageOnChange: true,
-            },
+                include: './src/**/*',
+                reloadPageOnChange: true
+            }
         }),
         nunjucks({
             templatesDir: root,
@@ -142,15 +139,15 @@ export default defineConfig((env) => ({
                     startsWith: (str, targetStr) => {
                         if (!str.length) return false
                         return str.startsWith(targetStr)
-                    },
-                },
-            },
-        }),
+                    }
+                }
+            }
+        })
     ],
     resolve: {
         alias: {
-            '@': normalizePath(resolve(__dirname, 'src')),
-        },
+            '@': normalizePath(resolve(__dirname, 'src'))
+        }
     },
     build: {
         emptyOutDir: false,
@@ -170,8 +167,8 @@ export default defineConfig((env) => ({
                     // Put fonts into css folder
                     if (['woff', 'woff2', 'ttf'].includes(extname)) folder = 'fonts/'
                     return `assets/compiled/${folder}[name][extname]`
-                },
-            },
-        },
-    },
+                }
+            }
+        }
+    }
 }))

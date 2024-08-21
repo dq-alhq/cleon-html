@@ -1,3 +1,4 @@
+import './global-setup'
 import './icons'
 
 declare var _: any
@@ -6,15 +7,14 @@ declare var Dropzone: any
 
 let DataTableModule: any
 let FileUploadModule: any
-let jQuery: any
 
 export { default as Accordion } from './components/accordion'
 export { default as Carousel } from './components/carousel'
 export { default as Collapsible } from './components/collapsible'
 export { default as ComboBox } from './components/combobox'
 export { default as CopyMarkup } from './components/copy-markup'
+export { default as Dropdown } from './components/dropdown'
 export { default as InputNumber } from './components/input-number'
-export { default as Dropdown } from './components/menu'
 export { default as Overlay } from './components/overlay'
 export { default as PinInput } from './components/pin-input'
 export { default as RemoveElement } from './components/remove-element'

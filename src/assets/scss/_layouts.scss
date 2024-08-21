@@ -1,0 +1,30 @@
+@layer components {
+  .sidebar {
+    @apply sticky bg-background border-r max-h-screen top-0 overflow-hidden w-full max-w-xs;
+  }
+  .sidebar-title {
+    @apply pl-4 py-2 text-base font-medium text-muted-foreground;
+  }
+  .sidebar-item {
+    @apply ml-4 w-full relative hover:text-primary transition-colors outline-0 text-foreground;
+  }
+  .sidebar-item.active {
+    @apply text-primary border-l-primary border-l-2;
+  }
+  .sidebar-link {
+    @apply flex py-1.5 pl-4 [&_svg]:flex-shrink-0 whitespace-nowrap gap-2 relative text-base focus:outline-none focus-visible:text-primary items-center;
+  }
+  .submenu {
+    @apply overflow-hidden flex relative w-full flex-col;
+  }
+  .submenu-item {
+    @apply flex -ml-2 hover:text-primary [&_svg]:size-6 items-center gap-x-2 outline-0 text-foreground;
+  }
+  .submenu-link {
+    @apply relative pl-4 py-1.5 text-base hover:text-primary focus:outline-none text-foreground ml-8 flex justify-between items-center;
+  }
+  .sidebar-item.active, .sidebar-link.active, .submenu-link.active {
+    @apply text-primary border-l-primary border-l-2;
+  }
+
+}

@@ -1,17 +1,17 @@
 [
   {
-    "name": "Menu",
+    "name": "Components",
     "isTitle": true
   },
   {
     "name": "Dashboard",
     "url": "index.html",
-    "icon": "grid-fill"
+    "icon": "gauge"
   },
   {
-    "name": "Components",
-    "key": "component",
-    "icon": "stack",
+    "name": "Base Component",
+    "key": "base-component",
+    "icon": "layers",
     "submenu": [
       {
         "name": "Accordion",
@@ -22,12 +22,12 @@
         "url": "component-alert.html"
       },
       {
-        "name": "Badge",
-        "url": "component-badge.html"
+        "name": "Avatar",
+        "url": "component-avatar.html"
       },
       {
-        "name": "Breadcrumb",
-        "url": "component-breadcrumb.html"
+        "name": "Badge",
+        "url": "component-badge.html"
       },
       {
         "name": "Button",
@@ -38,212 +38,160 @@
         "url": "component-card.html"
       },
       {
+        "name": "Chat Bubbles",
+        "url": "component-chat-bubbles.html"
+      },
+      {
         "name": "Carousel",
         "url": "component-carousel.html"
       },
       {
-        "name": "Collapse",
-        "url": "component-collapse.html"
-      },
-      {
-        "name": "Dropdown",
-        "url": "component-dropdown.html"
+        "name": "Collapsible",
+        "url": "component-collabsible.html"
       },
       {
         "name": "List Group",
         "url": "component-list-group.html"
       },
       {
-        "name": "Modal",
-        "url": "component-modal.html"
-      },
-      {
-        "name": "Navs",
-        "url": "component-navs.html"
-      },
-      {
-        "name": "Pagination",
-        "url": "component-pagination.html"
-      },
-      {
-        "name": "Placeholder",
-        "url": "component-placeholder.html"
-      },
-      {
         "name": "Progress",
         "url": "component-progress.html"
       },
       {
-        "name": "Spinner",
-        "url": "component-spinner.html"
-      },
-      {
-        "name": "Toasts",
-        "url": "component-toasts.html"
-      },
-      {
-        "name": "Tooltip",
-        "url": "component-tooltip.html"
-      }
-    ]
-  },
-  {
-    "name": "Extra Components",
-    "key": "extra-component",
-    "icon": "collection-fill",
-    "submenu": [
-      {
-        "name": "Avatar",
-        "url": "extra-component-avatar.html"
-      },
-      {
-        "name": "Comment",
-        "url": "extra-component-comment.html"
-      },
-      {
-        "name": "Divider",
-        "url": "extra-component-divider.html"
-      },
-      {
-        "name": "Date Picker",
-        "url": "extra-component-date-picker.html"
-      },
-      {
-        "name": "Flag",
-        "url": "extra-component-flag.html"
-      },
-      {
-        "name": "Sweet Alert",
-        "url": "extra-component-sweetalert.html"
-      },
-      {
-        "name": "Toastify",
-        "url": "extra-component-toastify.html"
+        "name": "File Upload",
+        "url": "component-file-upload.html"
       },
       {
         "name": "Rating",
-        "url": "extra-component-rating.html"
+        "url": "component-rating.html"
+      },
+      {
+        "name": "Skeleton",
+        "url": "component-skeleton.html"
       }
     ]
   },
   {
-    "name": "Layouts",
-    "key": "layout",
-    "icon": "grid-1x2-fill",
+    "name": "Navigations",
+    "key": "navigations",
+    "icon": "milestone",
     "submenu": [
       {
-        "name": "Default Layout",
-        "url": "layout-default.html"
+        "name": "Breadcrumbs",
+        "url": "navigations-breadcrumbs.html"
       },
       {
-        "name": "1 Column",
-        "url": "layout-vertical-1-column.html"
+        "name": "Pagination",
+        "url": "navigations-pagination.html"
       },
       {
-        "name": "Vertical Navbar",
-        "url": "layout-vertical-navbar.html"
-      },
-      {
-        "name": "RTL Layout",
-        "url": "layout-rtl.html"
-      },
-      {
-        "name": "Horizontal Menu",
-        "url": "layout-horizontal.html"
+        "name": "Tabs",
+        "url": "navigations-tabs.html"
       }
     ]
   },
   {
-    "name": "Forms & Tables",
-    "isTitle": true
-  },
-  {
-    "name": "Form Elements",
-    "key": "form-element",
-    "icon": "hexagon-fill",
+    "name": "Forms",
+    "key": "forms",
+    "icon": "file-pen",
     "submenu": [
+      {
+        "name": "Checkbox",
+        "url": "forms-checkbox.html"
+      },
+      {
+        "name": "Datepicker",
+        "url": "forms-datepicker.html"
+      },
+      {
+        "name": "File Input",
+        "url": "forms-file-input.html"
+      },
       {
         "name": "Input",
-        "url": "form-element-input.html"
+        "url": "forms-input.html"
       },
       {
         "name": "Input Group",
-        "url": "form-element-input-group.html"
+        "url": "forms-input-group.html"
       },
       {
-        "name": "Select",
-        "url": "form-element-select.html"
+        "name": "Input OTP",
+        "url": "forms-input-otp.html"
+      },
+      {
+        "name": "Number Input",
+        "url": "forms-number-input.html"
+      },
+      {
+        "name": "Password",
+        "url": "forms-password.html"
       },
       {
         "name": "Radio",
-        "url": "form-element-radio.html"
+        "url": "forms-radio.html"
       },
       {
-        "name": "Checkbox",
-        "url": "form-element-checkbox.html"
+        "name": "Select",
+        "url": "forms-select.html"
+      },
+      {
+        "name": "Slider",
+        "url": "forms-slider.html"
+      },
+      {
+        "name": "Switch",
+        "url": "forms-switch.html"
       },
       {
         "name": "Textarea",
-        "url": "form-element-textarea.html"
+        "url": "forms-textarea.html"
       }
     ]
   },
   {
-    "name": "Form Layout",
-    "url": "form-layout.html",
-    "icon": "file-earmark-medical-fill"
-  },
-  {
-    "name": "Form Validation",
-    "icon": "journal-check",
-    "key": "form-validation",
+    "name": "Overlays",
+    "key": "overlays",
+    "icon": "bring-to-front",
     "submenu": [
       {
-        "name": "Parsley",
-        "url": "form-validation-parsley.html"
+        "name": "Dropdown Menu",
+        "url": "overlays-dropdown.html"
+      },
+      {
+        "name": "Modal",
+        "url": "overlays-modal.html"
+      },
+      {
+        "name": "Popover",
+        "url": "overlays-popover.html"
+      },
+      {
+        "name": "Sheet",
+        "url": "overlays-sheet.html"
+      },
+      {
+        "name": "Tooltip",
+        "url": "overlays-tooltip.html"
       }
     ]
   },
   {
-    "name": "Form Editor",
-    "icon": "pen-fill",
-    "key": "form-editor",
+    "name": "Tables",
+    "key": "tables",
+    "icon": "table-properties",
     "submenu": [
       {
-        "name": "Quill",
-        "url": "form-editor-quill.html"
+        "name": "Basic Table",
+        "url": "tables-basic-table.html"
       },
-      {
-        "name": "CKEditor",
-        "url": "form-editor-ckeditor.html"
-      },
-      {
-        "name": "Summernote",
-        "url": "form-editor-summernote.html"
-      },
-      {
-        "name": "TinyMCE",
-        "url": "form-editor-tinymce.html"
-      }
-    ]
-  },
-  {
-    "name": "Table",
-    "url": "table.html",
-    "icon": "grid-1x2-fill"
-  },
-  {
-    "name": "Datatables",
-    "key": "table-datatable",
-    "icon": "file-earmark-spreadsheet-fill",
-    "submenu": [
       {
         "name": "Datatable",
-        "url": "table-datatable.html"
+        "url": "tables-datatable.html"
       },
       {
         "name": "Datatable (jQuery)",
-        "url": "table-datatable-jquery.html"
+        "url": "tables-datatable-jquery.html"
       }
     ]
   },
@@ -252,220 +200,128 @@
     "isTitle": true
   },
   {
-    "name": "Widgets",
-    "key": "ui-widgets",
-    "icon": "pentagon-fill",
-    "submenu": [
-      {
-        "name": "Chatbox",
-        "url": "ui-widgets-chatbox.html"
-      },
-      {
-        "name": "Pricing",
-        "url": "ui-widgets-pricing.html"
-      },
-      {
-        "name": "To-do List",
-        "url": "ui-widgets-todolist.html"
-      }
-    ]
-  },
-  {
     "name": "Icons",
-    "key": "ui-icons",
-    "icon": "egg-fill",
+    "key": "icons",
+    "icon": "shapes",
     "submenu": [
       {
-        "name": "Bootstrap Icons ",
-        "url": "ui-icons-bootstrap-icons.html"
+        "name": "Lucide Icons",
+        "url": "icons-lucide-icons.html"
       },
       {
         "name": "Fontawesome",
-        "url": "ui-icons-fontawesome.html"
-      },
-      {
-        "name": "Dripicons",
-        "url": "ui-icons-dripicons.html"
+        "url": "icons-fontawesome.html"
       }
     ]
   },
   {
     "name": "Charts",
-    "key": "ui-chart",
-    "icon": "bar-chart-fill",
+    "key": "charts",
+    "icon": "chart-bar",
     "submenu": [
       {
-        "name": "ChartJS",
-        "url": "ui-chart-chartjs.html"
+        "name": "Chart JS",
+        "url": "charts-chartjs.html"
       },
       {
         "name": "Apexcharts",
-        "url": "ui-chart-apexcharts.html"
+        "url": "charts-apexcharts.html"
+      },
+      {
+        "name": "Chartist",
+        "url": "charts-chartist.html"
+      },
+      {
+        "name": "Sparklines",
+        "url": "charts-sparklines.html"
+      },
+      {
+        "name": "Knob",
+        "url": "charts-knob.html"
       }
     ]
-  },
-  {
-    "name": "File Uploader",
-    "key": "ui-file",
-    "icon": "cloud-arrow-up-fill",
-    "url": "ui-file-uploader.html"
   },
   {
     "name": "Maps",
-    "key": "ui-map",
-    "icon": "map-fill",
+    "key": "maps",
+    "icon": "map",
     "submenu": [
       {
         "name": "Google Map",
-        "url": "ui-map-google-map.html"
+        "url": "maps-google-map.html"
       },
       {
         "name": "JS Vector Map",
-        "url": "ui-map-jsvectormap.html"
-      },
-			{
-				"name": "Leaflet Map",
-				"url": "ui-map-leaflet.html"
-			},
-			{
-				"name": "OpenLayers Map",
-				"url": "ui-map-openlayers.html"
-			}
-    ]
-  },
-  {
-    "name": "Multi-level Menu",
-    "key": "ui-multi-level-menu",
-    "icon": "three-dots",
-    "submenu": [
-      {
-        "name": "First Level",
-        "key": "ui-multi-level-menu",
-        "url": "#",
-        "submenu": [
-          {
-            "name": "Second Level",
-            "url": "ui-multi-level-menu.html"
-          },
-          {
-            "name": "Second Level Menu",
-            "url": "#"
-          }
-        ]
+        "url": "maps-jsvectormap.html"
       },
       {
-        "name": "Another Menu",
-        "url": "#",
-        "submenu": [
-          {
-            "name": "Second Level Menu",
-            "url": "#"
-          }
-        ]
+          "name": "Leaflet Map",
+          "url": "maps-leaflet.html"
+      },
+      {
+          "name": "OpenLayers Map",
+          "url": "maps-openlayers.html"
       }
     ]
   },
   {
-    "name": "Pages",
+    "name": "Sample Pages",
     "isTitle": true
   },
   {
-    "name": "Email Application",
-    "key": "application-email",
-    "icon": "envelope-fill",
-    "url": "application-email.html"
+    "name": "Admin",
+    "key": "admin",
+    "icon": "gauge",
+    "url": "samples-dashboard.html"
+  },
+  {
+    "name": "Email",
+    "key": "email",
+    "icon": "mail",
+    "url": "samples-email.html"
   },
   {
     "name": "Chat Application",
-    "key": "application-chat",
-    "icon": "chat-dots-fill",
+    "key": "chat-application",
+    "icon": "messages-square",
     "url": "application-chat.html"
-  },
-  {
-    "name": "Photo Gallery",
-    "key": "application-gallery",
-    "icon": "image-fill",
-    "url": "application-gallery.html"
-  },
-  {
-    "name": "Checkout Page",
-    "key": "application-checkout",
-    "icon": "basket-fill",
-    "url": "application-checkout.html"
-  },
-  {
-    "name": "Account",
-    "key": "account",
-    "icon": "person-circle",
-    "submenu": [
-      {
-        "name": "Profile",
-        "url": "account-profile.html"
-      },
-      {
-        "name": "Security",
-        "url": "account-security.html"
-      }
-    ]
   },
   {
     "name": "Authentication",
     "key": "auth",
-    "icon": "person-badge-fill",
+    "icon": "key-round",
     "submenu": [
       {
         "name": "Login",
-        "url": "auth-login.html"
+        "url": "pages-login.html"
       },
       {
         "name": "Register",
-        "url": "auth-register.html"
+        "url": "pages-register.html"
       },
       {
         "name": "Forgot Password",
-        "url": "auth-forgot-password.html"
+        "url": "pages-forgot-password.html"
       }
     ]
   },
   {
     "name": "Errors",
     "key": "error",
-    "icon": "x-octagon-fill",
+    "icon": "circle-x",
     "submenu": [
       {
         "name": "403",
-        "url": "error-403.html"
+        "url": "pages-error-403.html"
       },
       {
         "name": "404",
-        "url": "error-404.html"
+        "url": "pages-error-404.html"
       },
       {
         "name": "500",
-        "url": "error-500.html"
+        "url": "pages-error-500.html"
       }
     ]
-  },
-  {
-    "name": "Raise Support",
-    "isTitle": true
-  },
-  {
-    "name": "Documentation",
-    "key": "error",
-    "icon": "life-preserver",
-    "url": "https://zuramai.github.io/mazer/docs"
-  },
-  {
-    "name": "Contribute",
-    "key": "error",
-    "url": "https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md",
-    "icon": "puzzle"
-  },
-  {
-    "name": "Donate",
-    "key": "error",
-    "url": "https://github.com/zuramai/mazer#donation",
-    "icon": "cash"
   }
 ]

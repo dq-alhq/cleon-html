@@ -3,7 +3,8 @@ import plugin from 'tailwindcss/plugin'
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./src/**/*.{html,js}'],
+    content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+    darkMode: 'class',
     theme: {
         container: {
             center: true,
@@ -17,7 +18,8 @@ module.exports = {
         },
         extend: {
             fontFamily: {
-                sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans]
+                sans: ['GT Walsheim Pro', ...defaultTheme.fontFamily.sans],
+                mono: ['Jetbrains Mono', ...defaultTheme.fontFamily.mono]
             },
             colors: {
                 border: 'hsl(var(--border))',
@@ -74,6 +76,12 @@ module.exports = {
                 lg: `var(--radius)`,
                 md: `calc(var(--radius) - 2px)`,
                 sm: 'calc(var(--radius) - 4px)'
+            },
+            buttonSizes: {
+                sm: '1.5rem',
+                md: '2rem',
+                lg: '2.5rem',
+                icon: '1.5rem'
             }
         }
     },
@@ -152,25 +160,25 @@ module.exports = {
                 })
             })
 
-            addVariant('collapse-open', [
+            addVariant('collapsible-open', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.collapse.open .${e(`collapse-open${separator}${className}`)}`
+                        return `.collapsible.open .${e(`collapsible-open${separator}${className}`)}`
                     })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.collapse.open.${e(`collapse-open${separator}${className}`)}`
+                        return `.collapsible.open.${e(`collapsible-open${separator}${className}`)}`
                     })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.collapse-toggle.open .${e(`collapse-open${separator}${className}`)}`
+                        return `.collapsible-toggle.open .${e(`collapsible-open${separator}${className}`)}`
                     })
                 },
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
-                        return `.collapse-toggle.open.${e(`collapse-open${separator}${className}`)}`
+                        return `.collapsible-toggle.open.${e(`collapsible-open${separator}${className}`)}`
                     })
                 }
             ])
@@ -226,13 +234,11 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('scrollspy-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
                     return `.active.${e(`scrollspy-active${separator}${className}`)}`
                 })
             })
-
             addVariant('carousel-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -245,7 +251,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('carousel-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -258,7 +263,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('selected', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -271,7 +275,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('select-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -284,7 +287,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('select-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -297,7 +299,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('input-number-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -310,7 +311,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('pin-input-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -323,7 +323,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('select-opened', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -331,7 +330,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('password-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -344,7 +342,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -357,7 +354,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-success', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -370,7 +366,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-completed', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -383,7 +378,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-error', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -396,7 +390,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-processed', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -409,7 +402,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-disabled', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -422,7 +414,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('stepper-skipped', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -435,7 +426,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('strong-password', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -448,7 +438,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('strong-password-accepted', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -461,7 +450,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('strong-password-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -469,7 +457,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('combo-box-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -482,7 +469,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('combo-box-has-value', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -495,7 +481,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('combo-box-selected', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -508,7 +493,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('combo-box-tab-active', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -516,7 +500,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('apexcharts-tooltip-dark', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -524,7 +507,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('success', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -537,7 +519,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('error', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -550,7 +531,6 @@ module.exports = {
                     })
                 }
             ])
-
             // Datatables.net
             addVariant('datatable-ordering-asc', [
                 ({ modifySelectors, separator }) => {
@@ -564,7 +544,6 @@ module.exports = {
                     })
                 }
             ])
-
             addVariant('datatable-ordering-desc', [
                 ({ modifySelectors, separator }) => {
                     modifySelectors(({ className }) => {
@@ -577,20 +556,17 @@ module.exports = {
                     })
                 }
             ])
-
             // Modes
             addVariant('default-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
                     return `.default .${e(`default-mode-active${separator}${className}`)}`
                 })
             })
-
             addVariant('dark-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
                     return `.dark .${e(`dark-mode-active${separator}${className}`)}`
                 })
             })
-
             addVariant('auto-mode-active', ({ modifySelectors, separator }) => {
                 modifySelectors(({ className }) => {
                     return `.auto .${e(`auto-mode-active${separator}${className}`)}`

@@ -13,7 +13,7 @@ interface IMenuSearchHistory {
     existsInHistory(index: number): boolean
     clearHistory(): void
 }
-interface IMenu {
+interface IDropdown {
     options?: {}
     open(): void
     close(isAnimated: boolean): void
@@ -39,7 +39,7 @@ const menuSearchHistory = {
     }
 }
 
-class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
+class Dropdown extends BaseComponent<{}, IHTMLElementPopper> implements IDropdown {
     private static history: IMenuSearchHistory
     private readonly toggle: HTMLElement | null
     private readonly closers: HTMLElement[] | null
@@ -52,11 +52,11 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
         super(el, options, events)
 
         this.toggle =
-            this.el.querySelector(':scope > .menu-toggle') ||
-            this.el.querySelector(':scope > .menu-toggle-wrapper > .menu-toggle') ||
+            this.el.querySelector(':scope > .dropdown-toggle') ||
+            this.el.querySelector(':scope > .dropdown-toggle-wrapper > .dropdown-toggle') ||
             (this.el.children[0] as HTMLElement)
-        this.closers = Array.from(this.el.querySelectorAll(':scope .menu-close')) || null
-        this.menu = this.el.querySelector(':scope > .menu')
+        this.closers = Array.from(this.el.querySelectorAll(':scope .dropdown-close')) || null
+        this.menu = this.el.querySelector(':scope > .dropdown-menu')
         this.eventMode = getClassProperty(this.el, '--trigger', 'click')
         this.closeMode = getClassProperty(this.el, '--auto-close', 'true')
         this.animationInProcess = false
@@ -65,7 +65,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     private init() {
-        this.createCollection(window.$MenuCollection, this)
+        this.createCollection(window.$DropdownCollection, this)
 
         if ((this.toggle as HTMLButtonElement).disabled) return false
 
@@ -227,7 +227,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
         })
 
         this.fireEvent('open', this.el)
-        dispatch('open.menu', this.el, this.el)
+        dispatch('open.dropdown', this.el, this.el)
     }
 
     public close(isAnimated = true) {
@@ -240,13 +240,13 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
             this.el.classList.remove('open')
 
             this.fireEvent('close', this.el)
-            dispatch('close.menu', this.el, this.el)
+            dispatch('close.dropdown', this.el, this.el)
         }
 
         this.animationInProcess = true
 
         if (isAnimated) {
-            const el: HTMLElement = this.el.querySelector('[data-menu-transition]') || this.menu
+            const el: HTMLElement = this.el.querySelector('[data-dropdown-transition]') || this.menu
 
             afterTransition(el, () => this.destroyPopper())
         } else this.destroyPopper()
@@ -262,7 +262,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
 
     // Static methods
     static getInstance(target: HTMLElement | string, isInstance?: boolean) {
-        const elInCollection = window.$MenuCollection.find(
+        const elInCollection = window.$DropdownCollection.find(
             (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
         )
 
@@ -270,33 +270,33 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static autoInit() {
-        if (!window.$MenuCollection) window.$MenuCollection = []
+        if (!window.$DropdownCollection) window.$DropdownCollection = []
 
-        document.querySelectorAll('.menu:not(.--prevent-on-load-init)').forEach((el: IHTMLElementPopper) => {
-            if (!window.$MenuCollection.find((elC) => (elC?.element?.el as HTMLElement) === el)) new Menu(el)
+        document.querySelectorAll('.dropdown:not(.--prevent-on-load-init)').forEach((el: IHTMLElementPopper) => {
+            if (!window.$DropdownCollection.find((elC) => (elC?.element?.el as HTMLElement) === el)) new Dropdown(el)
         })
 
-        if (window.$MenuCollection) {
-            document.addEventListener('keydown', (evt) => Menu.accessibility(evt))
+        if (window.$DropdownCollection) {
+            document.addEventListener('keydown', (evt) => Dropdown.accessibility(evt))
 
             window.addEventListener('click', (evt) => {
                 const evtTarget = evt.target
 
-                Menu.closeCurrentlyOpened(evtTarget as HTMLElement)
+                Dropdown.closeCurrentlyOpened(evtTarget as HTMLElement)
             })
 
             let prevWidth = window.innerWidth
             window.addEventListener('resize', () => {
                 if (window.innerWidth !== prevWidth) {
                     prevWidth = innerWidth
-                    Menu.closeCurrentlyOpened(null, false)
+                    Dropdown.closeCurrentlyOpened(null, false)
                 }
             })
         }
     }
 
     static open(target: HTMLElement) {
-        const elInCollection = window.$MenuCollection.find(
+        const elInCollection = window.$DropdownCollection.find(
             (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
         )
 
@@ -304,7 +304,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static close(target: HTMLElement) {
-        const elInCollection = window.$MenuCollection.find(
+        const elInCollection = window.$DropdownCollection.find(
             (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
         )
 
@@ -317,7 +317,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     static accessibility(evt: KeyboardEvent) {
         this.history = menuSearchHistory
 
-        const target: ICollectionItem<Menu> | null = window.$MenuCollection.find((el) =>
+        const target: ICollectionItem<Dropdown> | null = window.$DropdownCollection.find((el) =>
             el.element.el.classList.contains('open')
         )
 
@@ -339,7 +339,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
                 case 'Enter':
                     if (
                         !target.element.menu.querySelector('.select button:focus') &&
-                        !target.element.menu.querySelector('.collapsible-toggle:focus')
+                        !target.element.menu.querySelector('.collapse-toggle:focus')
                     ) {
                         this.onEnter(evt)
                     }
@@ -373,10 +373,10 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static onEscape(evt: KeyboardEvent) {
-        const menu = (evt.target as HTMLElement).closest('.menu.open')
+        const dropdown = (evt.target as HTMLElement).closest('.dropdown.open')
 
-        if (window.$MenuCollection.find((el) => el.element.el === menu)) {
-            const target = window.$MenuCollection.find((el) => el.element.el === menu)
+        if (window.$DropdownCollection.find((el) => el.element.el === dropdown)) {
+            const target = window.$DropdownCollection.find((el) => el.element.el === dropdown)
 
             if (target) {
                 target.element.close()
@@ -388,19 +388,19 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static onEnter(evt: KeyboardEvent) {
-        const menu = (evt.target as HTMLElement).parentElement
+        const dropdown = (evt.target as HTMLElement).parentElement
 
-        if (window.$MenuCollection.find((el) => el.element.el === menu)) {
+        if (window.$DropdownCollection.find((el) => el.element.el === dropdown)) {
             evt.preventDefault()
 
-            const target = window.$MenuCollection.find((el) => el.element.el === menu)
+            const target = window.$DropdownCollection.find((el) => el.element.el === dropdown)
 
             if (target) target.element.open()
         }
     }
 
     static onArrow(isArrowUp = true) {
-        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+        const target = window.$DropdownCollection.find((el) => el.element.el.classList.contains('open'))
 
         if (target) {
             const menu = target.element.menu
@@ -408,8 +408,8 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
             if (!menu) return false
 
             const preparedLinks = isArrowUp
-                ? Array.from(menu.querySelectorAll('a:not([hidden]), .menu > button:not([hidden])')).reverse()
-                : Array.from(menu.querySelectorAll('a:not([hidden]), .menu > button:not([hidden])'))
+                ? Array.from(menu.querySelectorAll('a:not([hidden]), .dropdown > button:not([hidden])')).reverse()
+                : Array.from(menu.querySelectorAll('a:not([hidden]), .dropdown > button:not([hidden])'))
 
             const links = preparedLinks.filter((el: any) => !el.classList.contains('disabled'))
             const current = menu.querySelector('a:focus, button:focus')
@@ -424,7 +424,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static onStartEnd(isStart = true) {
-        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+        const target = window.$DropdownCollection.find((el) => el.element.el.classList.contains('open'))
 
         if (target) {
             const menu = target.element.menu
@@ -443,7 +443,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
     }
 
     static onFirstLetter(code: string) {
-        const target = window.$MenuCollection.find((el) => el.element.el.classList.contains('open'))
+        const target = window.$DropdownCollection.find((el) => el.element.el.classList.contains('open'))
 
         if (target) {
             const menu = target.element.menu
@@ -472,23 +472,25 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
 
     static closeCurrentlyOpened(evtTarget: HTMLElement | null = null, isAnimated = true) {
         const parent =
-            evtTarget && evtTarget.closest('.menu') && evtTarget.closest('.menu').parentElement.closest('.menu')
-                ? evtTarget.closest('.menu').parentElement.closest('.menu')
+            evtTarget &&
+            evtTarget.closest('.dropdown') &&
+            evtTarget.closest('.dropdown').parentElement.closest('.dropdown')
+                ? evtTarget.closest('.dropdown').parentElement.closest('.dropdown')
                 : null
         let currentlyOpened = parent
-            ? window.$MenuCollection.filter(
+            ? window.$DropdownCollection.filter(
                   (el) =>
                       el.element.el.classList.contains('open') &&
-                      el.element.menu.closest('.menu').parentElement.closest('.menu') === parent
+                      el.element.menu.closest('.dropdown').parentElement.closest('.dropdown') === parent
               )
-            : window.$MenuCollection.filter((el) => el.element.el.classList.contains('open'))
+            : window.$DropdownCollection.filter((el) => el.element.el.classList.contains('open'))
 
         if (
             evtTarget &&
-            evtTarget.closest('.menu') &&
-            getClassPropertyAlt(evtTarget.closest('.menu'), '--auto-close') === 'inside'
+            evtTarget.closest('.dropdown') &&
+            getClassPropertyAlt(evtTarget.closest('.dropdown'), '--auto-close') === 'inside'
         ) {
-            currentlyOpened = currentlyOpened.filter((el) => el.element.el !== evtTarget.closest('.menu'))
+            currentlyOpened = currentlyOpened.filter((el) => el.element.el !== evtTarget.closest('.dropdown'))
         }
 
         if (currentlyOpened) {
@@ -502,7 +504,7 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
 
     // Backward compatibility
     static on(evt: string, target: HTMLElement, cb: Function) {
-        const elInCollection = window.$MenuCollection.find(
+        const elInCollection = window.$DropdownCollection.find(
             (el) => el.element.el === (typeof target === 'string' ? document.querySelector(target) : target)
         )
 
@@ -512,23 +514,23 @@ class Menu extends BaseComponent<{}, IHTMLElementPopper> implements IMenu {
 
 declare global {
     interface Window {
-        Menu: Function
-        $MenuCollection: ICollectionItem<Menu>[]
+        Dropdown: Function
+        $DropdownCollection: ICollectionItem<Dropdown>[]
     }
 }
 
 window.addEventListener('load', () => {
-    Menu.autoInit()
+    Dropdown.autoInit()
 })
 
 window.addEventListener('resize', () => {
-    if (!window.$MenuCollection) window.$MenuCollection = []
+    if (!window.$DropdownCollection) window.$DropdownCollection = []
 
-    window.$MenuCollection.forEach((el) => el.element.resizeHandler())
+    window.$DropdownCollection.forEach((el) => el.element.resizeHandler())
 })
 
 if (typeof window !== 'undefined') {
-    window.Menu = Menu
+    window.Dropdown = Dropdown
 }
 
-export default Menu
+export default Dropdown

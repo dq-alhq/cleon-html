@@ -1,0 +1,72 @@
+<header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-background border-b text-sm py-2.5 lg:ps-[260px]">
+    <nav class="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
+        <!-- Logo -->
+        <a class="flex lg:hidden mr-4 items-center rounded-md font-semibold focus:outline-none focus:opacity-80" href="#" aria-label="Logo">
+            <img src="assets/static/images/logo/favicon.png" class="size-8 object-contain" alt="Logo">
+        </a>
+        <!-- End Logo -->
+        <div class="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
+            <div class="hidden md:block">
+                <!-- Search Input -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
+                        <i data-lucide="search" class="size-4 text-muted-foreground"></i>
+                    </div>
+                    <label>
+                        <input type="text" class="py-2 ps-10 pe-16 block w-full transition duration-200 bg-background border rounded-lg text-sm focus:outline-none focus:border-primary focus:ring focus:ring-primary/20 disabled:opacity-50 disabled:pointer-events-none" placeholder="Search">
+                    </label>
+                    <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-3">
+                      <kbd class="min-h-[30px] inline-flex justify-center items-center text-xs text-muted-foreground rounded-md">
+                        <i data-lucide="command" class="size-3"></i>
+                        <i data-lucide="plus" class="size-3"></i>
+                        <i data-lucide="square-slash" class="size-3"></i>
+                      </kbd>
+                    </div>
+                </div>
+                <!-- End Search Input -->
+            </div>
+
+            <div class="flex flex-row items-center justify-end gap-1">
+                <button type="button" class="md:hidden size-[38px] relative inline-flex justify-center items-center gap-x-2 font-semibold rounded-md border border-transparent text-foreground hover:bg-accent focus:outline-none active:brightness-90">
+                    <i data-lucide="search" class="size-4"></i>
+                    <span class="sr-only">Search</span>
+                </button>
+
+                <button type="button" class="md:hidden size-[38px] relative inline-flex justify-center items-center gap-x-2 font-semibold rounded-md border border-transparent text-foreground hover:bg-accent focus:outline-none active:brightness-90">
+                    <i data-lucide="bell" class="size-4"></i>
+                    <span class="sr-only">Notification</span>
+                </button>
+
+                <button type="button" id="theme-switcher" class="inline-flex transition me-1 size-[38px] relative justify-center items-center gap-x-2 font-semibold rounded-md border border-transparent text-foreground hover:bg-accent focus:outline-none active:brightness-90">
+                    <i data-lucide="sun" class="size-4 dark:block hidden"></i>
+                    <i data-lucide="moon" class="size-4 block dark:hidden"></i>
+                    <span class="sr-only">Theme Switch</span>
+                </button>
+
+                <!-- Dropdown -->
+                <div class="dropdown [--placement:bottom-right] relative inline-flex">
+                    <button id="menu-profile" type="button" class="size-[38px] border-foreground inline-flex justify-center items-center text-sm font-semibold rounded-full border text-foreground focus:outline-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                        <img class="shrink-0 size-[38px] rounded-full" src="https://github.com/dq-alhq.png" alt="Avatar">
+                    </button>
+                    <div class="dropdown-menu transition-[opacity,margin] mt-2 duration dropdown-open:opacity-100 border opacity-0 hidden min-w-60 bg-background shadow rounded-lg" role="menu" aria-orientation="vertical" aria-labelledby="menu-profile">
+                        <div class="py-1 px-3 bg-background rounded-t-lg">
+                            <p class="text-sm text-muted-foreground">Diqi Al Haqqi</p>
+                            <p class="text-sm font-medium text-foreground">@dq-alhq</p>
+                        </div>
+                        <div class="p-1 space-y-0.5">
+                            <a class="flex transition items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-foreground hover:text-primary-foreground hover:bg-primary focus:outline-none focus:text-primary-foreground focus:bg-primary" href="#">
+                                <i data-lucide="user" class="size-4"></i>
+                                Profile
+                            </a>
+                            <a class="flex transition items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-danger hover:bg-danger hover:text-danger-foreground focus:outline-none focus:bg-danger focus:text-danger-foreground" href="#">
+                                <i data-lucide="log-out" class="size-4"></i>
+                                Log Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Dropdown -->
+            </div>
+        </div>
+    </nav>
+</header>

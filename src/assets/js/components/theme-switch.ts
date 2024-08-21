@@ -110,6 +110,15 @@ class ThemeSwitch extends BaseComponent<IThemeSwitchOptions> implements IThemeSw
             }
         })
 
+        document.querySelectorAll('#theme-switcher:not(.--prevent-on-load-init)').forEach((el: HTMLElement) => {
+            const switchTheme = new ThemeSwitch(el)
+            switchTheme.el.addEventListener('click', () => {
+                let theme = localStorage.getItem('theme')
+                switchTheme.setAppearance(theme === 'dark' ? 'default' : 'dark')
+                toggleObserveSystemTheme(switchTheme)
+            })
+        })
+
         document
             .querySelectorAll('[data-theme-click-value]:not(.--prevent-on-load-init)')
             .forEach((el: HTMLElement) => {
@@ -120,7 +129,6 @@ class ThemeSwitch extends BaseComponent<IThemeSwitchOptions> implements IThemeSw
 
                 switchTheme.el.addEventListener('click', () => {
                     switchTheme.setAppearance(theme)
-
                     toggleObserveSystemTheme(switchTheme)
                 })
             })
